@@ -1,0 +1,980 @@
+/* 
+ * VoiceReady - Text-to-Speech Application for Dyslexic Students
+ * Main Stylesheet
+ */
+
+/* ===== 1. Variables and Reset ===== */
+:root {
+    --primary-color: #1e40af; /* Softer pastel blue */
+    --secondary-color: #f1f5f9; /* Warm cream background */
+    --accent-color: #2563eb; /* Darker blue for better contrast */
+    --accent-secondary: #dbeafe; /* Soft green */
+    --text-color: #1e293b; /* Slightly softer than black */
+    --light-text: #4b5563; /* Darker gray for better contrast */
+    --font-size: 1rem;
+    --line-spacing: 1.6;
+    --font-family: 'OpenDyslexic', system-ui, -apple-system, sans-serif;
+    --nav-height: 64px;
+    --border-radius: 12px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== 2. Base Elements ===== */
+body {
+    font-family: var(--font-family);
+    line-height: var(--line-spacing);
+    font-size: var(--font-size);
+    color: var(--text-color);
+    background-color: #f8fafc;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3 {
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover, a:focus {
+    text-decoration: underline;
+    color: #1e3a8a;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: 600;
+}
+
+button:hover, button:focus {
+    background-color: #1e3a8a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+button:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+button.accent {
+    background-color: var(--accent-color);
+}
+
+button.accent:hover, button.accent:focus {
+    background-color: #1e40af;
+}
+
+button.success {
+    background-color: #10b981; /* Green */
+}
+
+button.success:hover, button.success:focus {
+    background-color: #059669;
+}
+
+/* Accessibility - Skip link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px;
+    z-index: 1000;
+    transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ===== 3. Layout Components ===== */
+.main-container {
+    margin-top: var(--nav-height);
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.sidebar {
+flex: 1;
+min-width: 250px;
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+
+.full-width-on-mobile {
+    width: 100%;
+}
+
+/* Card component - used for panels and feature cards */
+.card {
+background: white;
+border-radius: var(--border-radius);
+box-shadow: var(--shadow);
+border: 1px solid rgba(0, 0, 0, 0.1);
+padding: 20px;
+margin-bottom: 20px;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.panel-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 15px;
+}
+
+.panel-header h2, .panel-header h3 {
+margin: 0;
+}
+
+.text-panel {
+flex: 2;
+min-width: 400px;
+display: flex;
+flex-direction: column;
+}
+
+/* ===== 4. Navigation ===== */
+nav {
+backdrop-filter: blur(10px);
+background-color: rgba(255, 255, 255, 0.9);
+border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+color: var(--text-color);
+height: var(--nav-height);
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 1rem;
+margin: 0 auto;
+box-shadow: var(--shadow);
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 100;
+}
+
+.logo {
+display: flex;
+align-items: center;
+gap: 0.75rem;
+font-size: 1.25rem;
+font-weight: bold;
+padding-left: 10px;
+}
+
+.app-title {
+font-size: 1.35rem;
+letter-spacing: 0.5px;
+color: var(--text-color);
+font-weight: 600;
+}
+
+.nav-links {
+display: flex;
+list-style: none;
+}
+
+.nav-links li {
+margin: 0 10px;
+}
+
+.nav-links a {
+color: var(--text-color);
+text-decoration: none;
+font-weight: 500;
+padding: 0.75rem 1.25rem;
+border-radius: 8px;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a:focus, .nav-links a.active {
+background-color: var(--primary-color);
+color: white !important;
+text-decoration: none;
+}
+
+.profile-icon {
+width: 40px;
+height: 40px;
+background-color: white;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--primary-color);
+font-weight: bold;
+cursor: pointer;
+border: 1px solid rgba(0, 0, 0, 0.1);
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-icon:hover, .profile-icon:focus {
+transform: translateY(-2px);
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu-toggle {
+display: none;
+background: none;
+border: none;
+font-size: 1.5rem;
+color: var(--text-color);
+cursor: pointer;
+padding: 0.5rem;
+}
+
+/* ===== 5. Components ===== */
+.control-group {
+margin-bottom: 15px;
+}
+
+label {
+display: block;
+margin-bottom: 5px;
+font-weight: bold;
+}
+
+select, 
+input[type="range"], 
+input[type="file"], 
+input[type="color"], 
+input[type="text"], 
+input[type="email"],
+input[type="password"] {
+width: 100%;
+padding: 10px;
+border: 1px solid #ddd;
+border-radius: var(--border-radius);
+background-color: white;
+margin-bottom: 10px;
+font-family: var(--font-family);
+color: #000;
+}
+
+select:focus, 
+input:focus, 
+textarea:focus {
+outline: 2px solid var(--accent-color);
+outline-offset: 2px;
+border-color: var(--accent-color);
+}
+
+.button-group {
+margin-top: 15px;
+margin-bottom: 15px;
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+}
+
+#textInput {
+width: 100%;
+flex-grow: 1;
+padding: 15px;
+border: 1px solid #ddd;
+border-radius: var(--border-radius);
+resize: vertical;
+background-color: white;
+font-family: var(--font-family);
+font-size: var(--font-size);
+line-height: var(--line-spacing);
+min-height: 200px;
+margin-bottom: 15px;
+}
+
+.status-indicator {
+margin-top: 10px;
+padding: 10px;
+background-color: var(--secondary-color);
+border-radius: var(--border-radius);
+text-align: center;
+}
+
+.progress-bar {
+width: 100%;
+height: 20px;
+background-color: #E2E8F0;
+border-radius: 10px;
+margin-top: 10px;
+overflow: hidden;
+}
+
+.progress {
+height: 100%;
+background: linear-gradient(90deg, var(--primary-color), #3b82f6);
+border-radius: 10px;
+width: 0%;
+transition: width 0.3s;
+}
+
+/* ===== 6. Feature-specific Styles ===== */
+/* Dictionary Panel */
+#dictionary-result {
+margin-top: 15px;
+padding: 15px;
+background-color: var(--secondary-color);
+border-radius: var(--border-radius);
+box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.highlighted-word {
+background-color: #93c5fd; /* Lighter blue */
+color: #1e3a8a; /* Dark blue text */
+padding: 0 2px;
+border-radius: 2px;
+}
+
+.synonyms-container {
+margin-top: 10px;
+display: flex;
+flex-wrap: wrap;
+gap: 5px;
+}
+
+.synonym {
+display: inline-block;
+background-color: var(--accent-secondary);
+padding: 5px 10px;
+border-radius: 15px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.synonym:hover, .synonym:focus {
+background-color: var(--accent-color);
+color: white;
+}
+
+.font-preview {
+margin-top: 10px;
+padding: 10px;
+background-color: var(--secondary-color);
+border-radius: var(--border-radius);
+}
+
+/* Tracking line for visual reading aid */
+.tracking-line {
+position: absolute;
+background-color: rgba(30, 64, 175, 0.2);
+height: 30px;
+width: 100%;
+pointer-events: none;
+border-radius: 4px;
+}
+
+/* Color themes */
+.color-theme {
+display: inline-block;
+width: 30px;
+height: 30px;
+border-radius: 50%;
+margin-right: 10px;
+cursor: pointer;
+border: 2px solid transparent;
+transition: transform 0.3s ease;
+}
+
+.color-theme:hover, .color-theme:focus {
+transform: scale(1.1);
+}
+
+.color-theme.active {
+border-color: #000;
+}
+
+/* Tabs Navigation */
+.main-tabs {
+display: flex;
+border-bottom: 2px solid var(--primary-color);
+margin-bottom: 20px;
+overflow-x: auto;
+white-space: nowrap;
+}
+
+.main-tab {
+padding: 10px 20px;
+cursor: pointer;
+background-color: #f5f5f5;
+border: 1px solid #ddd;
+border-bottom: none;
+border-radius: 5px 5px 0 0;
+margin-right: 5px;
+font-weight: bold;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.main-tab:hover, .main-tab:focus {
+background-color: #e5e7eb;
+}
+
+.main-tab.active {
+background-color: var(--primary-color);
+color: white;
+}
+
+.main-tab-content {
+display: none;
+}
+
+.main-tab-content.active {
+display: block;
+}
+
+/* Accordion */
+.accordion {
+margin-bottom: 10px;
+}
+
+.accordion-header {
+padding: 10px 15px;
+background-color: var(--primary-color);
+color: white; /* Changed for better contrast */
+cursor: pointer;
+border-radius: var(--border-radius);
+display: flex;
+justify-content: space-between;
+align-items: center;
+transition: background-color 0.3s ease;
+}
+
+.accordion-header:hover, .accordion-header:focus {
+background-color: #1e3a8a;
+}
+
+.accordion-content {
+padding: 15px;
+border: 1px solid #ddd;
+border-top: none;
+border-radius: 0 0 5px 5px;
+display: none;
+}
+
+/* Saved items */
+.saved-item {
+padding: 10px;
+margin-bottom: 10px;
+border: 1px solid #ddd;
+border-radius: var(--border-radius);
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.saved-item:hover, .saved-item:focus {
+background-color: var(--secondary-color);
+}
+
+/* Features grid */
+.features-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+gap: 20px;
+margin-top: 20px;
+}
+
+.feature-card {
+text-align: center;
+padding: 30px 20px;
+}
+
+.feature-icon {
+font-size: 2rem;
+margin-bottom: 15px;
+color: var(--primary-color);
+}
+
+.feature-card:hover, .feature-card:focus-within {
+transform: translateY(-5px);
+box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Login/Register Form */
+.auth-container {
+max-width: 400px;
+margin: 0 auto;
+background-color: white;
+padding: 20px;
+border-radius: var(--border-radius);
+box-shadow: var(--shadow);
+}
+
+.form-group {
+margin-bottom: 15px;
+}
+
+/* Footer */
+.site-footer {
+    background-color: #f1f5f9;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #e2e8f0;
+    width: 100%;
+    margin-top: auto;
+}
+
+.foot {
+margin-top: 10px;
+padding-right: 10px;
+}
+
+/* ===== 7. Utility Classes ===== */
+.hide-on-mobile {
+display: block;
+}
+
+.show-on-mobile {
+display: none;
+}
+
+/* Button styles for specific actions */
+/* Play button */
+#playBtn {
+background-color: #166534; /* Dark green */
+}
+
+#playBtn:hover, #playBtn:focus, #playBtn.active {
+background-color: #15803d; /* Lighter green */
+}
+
+/* Pause button */
+#pauseBtn {
+background-color: #f59e0b; /* Dark amber */
+}
+
+#pauseBtn:hover, #pauseBtn:focus, #pauseBtn.active {
+background-color: #d97706; /* Lighter amber */
+}
+
+/* Stop button */
+#stopBtn {
+background-color: #991b1b; /* Dark red */
+}
+
+#stopBtn:hover, #stopBtn:focus, #stopBtn.active {
+background-color: #b91c1c; /* Lighter red */
+}
+
+/* Clear button remains accent style */
+#clearBtn {
+background-color: #4f46e5;
+}
+
+#clearBtn:hover, #clearBtn:focus, #clearBtn.active {
+background-color: #4338ca; /* Bright indigo */
+}
+
+/* ===== 8. Media Queries ===== */
+/* Small devices (phones) */
+@media (max-width: 576px) {
+:root {
+    --font-size: 0.95rem;
+}
+
+.main-content {
+    flex-direction: column;
+}
+
+.text-panel {
+    min-width: 100%;
+}
+
+.button-group button {
+    padding: 0.6rem 1.2rem;
+    width: 100%;
+    margin-bottom: 8px;
+    margin-right: 0;
+}
+
+.features-grid {
+    grid-template-columns: 1fr;
+}
+
+.hide-on-mobile {
+    display: none;
+}
+
+.show-on-mobile {
+    display: block;
+}
+}
+/* Theme toggle button */
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    margin-left: auto;
+    margin-right: 15px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    position: relative;
+    top: 0;
+    height: 36px;
+
+}
+
+.theme-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark-icon, .light-icon {
+    transition: opacity 0.3s ease;
+    font-size: 18px;
+}
+
+body:not(.light-mode-override) .light-icon,
+body.light-mode-override .dark-icon {
+    display: none;
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 577px) and (max-width: 768px) {
+.main-content {
+    flex-direction: column;
+}
+
+.nav-links {
+    display: none;
+}
+
+.nav-links.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    box-shadow: var(--shadow);
+    z-index: 99;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    /* background-color: rgba(255, 255, 255, 0.4); */
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.nav-links.active li {
+    margin: 10px 20px;
+}
+
+.mobile-menu-toggle {
+    display: block;
+}
+
+.features-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.hide-on-mobile {
+    display: none;
+}
+
+.show-on-mobile {
+    display: block;
+}
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+.main-container {
+    padding: 20px 40px;
+}
+
+.features-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+}
+
+/* Print styles */
+@media print {
+nav, .sidebar, .button-group {
+    display: none;
+}
+
+body, .main-container {
+    margin: 0;
+    padding: 0;
+}
+
+.text-panel {
+    box-shadow: none;
+    border: none;
+}
+
+#textInput {
+    border: none;
+    height: auto;
+}
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+:root {
+    --primary-color: #3b82f6;
+    --secondary-color: #1e293b;
+    --accent-color: #60a5fa;
+    --accent-secondary: #1e3a8a;
+    --text-color: #f1f5f9;
+    --light-text: #cbd5e1;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)
+}
+
+body {
+    background-color: #0f172a;
+    color: #f1f5f9;
+}
+
+.card, nav, select, input, textarea, #textInput {
+    background-color: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+input::placeholder, textarea::placeholder {
+    color: #94a3b8; /* Lighter placeholder text */
+}
+
+.accordion-content, .saved-item {
+    background-color: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+.main-tab {
+    background-color: #334155;
+    color: #f1f5f9;
+}
+
+.site-footer {
+    background-color: #0f172a;
+    border-color: #1e293b;
+    color: #f1f5f9;
+}
+
+.progress-bar {
+    background-color: #334155;
+}
+button, .btn {
+    color: white;
+}
+
+/* Ensure links are visible */
+a {
+    color: #60a5fa;
+}
+
+a:hover, a:focus {
+    color: #93c5fd;
+}
+
+/* Ensure labels are visible */
+label {
+    color: #f1f5f9;
+}
+
+/* Ensure headings are visible */
+h1, h2, h3, h4, h5, h6 {
+    color: #f1f5f9;
+}
+
+/* Ensure panel content is visible */
+.panel-content {
+    color: #f1f5f9;
+}
+
+/* Ensure dictionary results are visible */
+#dictionary-result {
+    background-color: #1e293b;
+    color: #f1f5f9;
+}
+/* Override for users who prefer light mode */
+/* Override for users who prefer light mode */
+.light-mode-override {
+    --primary-color: #1e40af;
+    --secondary-color: #f1f5f9;
+    --accent-color: #2563eb;
+    --accent-secondary: #dbeafe;
+    --text-color: #1e293b;
+    --light-text: #4b5563;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.light-mode-override body{
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+.light-mode-override .card,
+.light-mode-override nav,
+.light-mode-override select,
+.light-mode-override input,
+.light-mode-override textarea,
+.light-mode-override #textInput {
+    background-color: #ffffff;
+    border-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.light-mode-override input::placeholder, 
+.light-mode-override textarea::placeholder {
+    color: #94a3b8;
+}
+
+.light-mode-override .accordion-content,
+.light-mode-override .saved-item {
+    background-color: #ffffff;
+    border-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.light-mode-override .main-tab {
+    background-color: #f5f5f5;
+    color: #1e293b;
+}
+
+.light-mode-override .site-footer {
+    background-color: #f1f5f9;
+    border-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.light-mode-override .progress-bar {
+    background-color: #e2e8f0;
+}
+.light-mode-override button, 
+.light-mode-override .btn {
+    color: white;
+    background-color: var(--primary-color);
+}
+
+/* Ensure links are visible in light mode */
+.light-mode-override a {
+    color: #2563eb;
+}
+
+.light-mode-override a:hover, 
+.light-mode-override a:focus {
+    color: #1e40af;
+}
+
+/* Ensure labels are visible in light mode */
+.light-mode-override label {
+    color: #1e293b;
+}
+
+/* Ensure headings are visible in light mode */
+.light-mode-override h1, 
+.light-mode-override h2, 
+.light-mode-override h3, 
+.light-mode-override h4, 
+.light-mode-override h5, 
+.light-mode-override h6 {
+    color: #1e293b;
+}
+
+/* Ensure panel content is visible in light mode */
+.light-mode-override .panel-content {
+    color: #1e293b;
+}
+
+/* Ensure dictionary results are visible in light mode */
+.light-mode-override #dictionary-result {
+    background-color: #ffffff;
+    color: #1e293b;
+}
+
+/* Word highlighting in light mode */
+.light-mode-override .highlight-word.active {
+    background-color: #93c5fd;
+    color: #1e3a8a;
+}
+}
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+* {
+    transition: none !important;
+    animation: none !important;
+}
+}
+
+/* Font loading and fallbacks */
+@font-face {
+font-family: 'OpenDyslexic';
+src: url('fonts/OpenDyslexic.woff2') format('woff2'),
+     url('fonts/OpenDyslexic.woff') format('woff');
+font-weight: normal;
+font-style: normal;
+font-display: swap;
+}
+/* Default theme */
+body[data-active-theme="default"] #textInput {
+    background-color: #f8f0e5;
+    color: #1e293b !important; /* Dark text for light background */
+}
+
+/* Cool theme */
+body[data-active-theme="cool"] #textInput {
+    background-color: #e0f7fa;
+    color: #1e293b !important;
+}
+
+/* Warm theme */
+body[data-active-theme="warm"] #textInput {
+    background-color: #fff8e1;
+    color: #1e293b !important;
+}
+
+/* Nature theme */
+body[data-active-theme="nature"] #textInput {
+    background-color: #f1f8e9;
+    color: #1e293b !important;
+}
+
+/* Rose theme */
+body[data-active-theme="rose"] #textInput {
+    background-color: #fce4ec;
+    color: #1e293b !important;
+}

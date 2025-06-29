@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Text-to-Speech for Dyslexic Students</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preload" href="fonts/OpenDyslexic.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="dns-prefetch" href="https://api.dictionary-service.com">
+    <link rel="preconnect" href="https://api.dictionary-service.com">
+    <script src="script.js" defer></script>
+    <script src="dictionary.js" defer></script>
+    <script src="toolstab.js" defer></script>
+</head>
+<body>
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="14" fill="#ffffff" stroke="#363636" stroke-width="2"/>
+                    <path d="M10 16C10 13.8 11.8 12 14 12C16.2 12 18 13.8 18 16" stroke="#363636" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M14 16C14 18.2 15.8 20 18 20C20.2 20 22 18.2 22 16" stroke="#363636" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="16" cy="16" r="2" fill="#77aaf1"/>
+                </svg>
+                <span class="app-title">TTS SYSTEM</span>
+            </div>
+            <button class="mobile-menu-toggle show-on-mobile" aria-label="Toggle menu">☰</button>
+            <ul class="nav-links">
+                <li><a href="#" class="main-tab active" id="homeTab" data-tab="home" aria-current="page">Home</a></li>
+                <li><a href="#" id="toolsTab" class="main-tab" data-tab="tools">Tools</a></li>
+                <li><a href="#" id="resourcesTab" class="main-tab" data-tab="resources">Resources</a></li>
+                <li><a href="#" id="supportTab" class="main-tab" data-tab="support">Support</a></li>
+            </ul>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle light/dark mode">
+                <span class="light-icon">☀️</span>
+                <span class="dark-icon">🌙</span>
+            </button>
+            <div class="profile-icon" id="profileIcon" data-tab="account" aria-label="Account menu" role="button" tabindex="0">
+                <i aria-hidden="true">👤</i>
+            </div>
+        </nav>
+    </header>
+
+    <main id="mainContent" class="main-container">
+        <!-- Home Tab Content -->
+        <section class="main-tab-content active" id="homeContent">
+            <div class="main-content">
+                <aside class="sidebar hide-on-mobile">
+                    <div class="controls-panel card">
+                        <div class="panel-header">
+                            <h2>Voice Settings</h2>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="voiceSelect" id="voiceSelectLabel">Voice:</label>
+                            <select id="voiceSelect" aria-labelledby="voiceSelectLabel"></select>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="rateRange" id="rateRangeLabel">Speech Rate: <span id="rateValue">1</span></label>
+                            <input type="range" id="rateRange" min="0.5" max="2" value="1" step="0.1" 
+                                   aria-labelledby="rateRangeLabel">
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="pitchRange" id="pitchRangeLabel">Pitch: <span id="pitchValue">1</span></label>
+                            <input type="range" id="pitchRange" min="0.5" max="2" value="1" step="0.1"
+                                   aria-labelledby="pitchRangeLabel">
+                        </div>
+
+                        <div class="panel-header">
+                            <h2>Text Settings</h2>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="fontSelect" id="fontSelectLabel">Font:</label>
+                            <select id="fontSelect" aria-labelledby="fontSelectLabel">
+                                <option value="'OpenDyslexic', Arial, sans-serif">OpenDyslexic</option>
+                                <option value="Arial, sans-serif">Arial</option>
+                                <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                                <option value="'Verdana', sans-serif">Verdana</option>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="fontSizeRange" id="fontSizeRangeLabel">Font Size: <span id="fontSizeValue">16</span>px</label>
+                            <input type="range" id="fontSizeRange" min="12" max="32" value="16" step="1"
+                                   aria-labelledby="fontSizeRangeLabel">
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="lineSpacingRange" id="lineSpacingRangeLabel">Line Spacing: <span id="lineSpacingValue">1.5</span></label>
+                            <input type="range" id="lineSpacingRange" min="1" max="3" value="1.5" step="0.1"
+                                   aria-labelledby="lineSpacingRangeLabel">
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="colorPicker" id="colorPickerLabel">Background Color:</label>
+                            <input type="color" id="colorPicker" value="#f8f0e5" aria-labelledby="colorPickerLabel">
+                        </div>
+
+                        <div class="panel-header">
+                            <h3>Color Themes</h3>
+                        </div>
+                        <div class="control-group">
+                            <div class="color-theme active" style="background-color: #f8f0e5;" data-theme="default" 
+                                 role="button" tabindex="0" aria-label="Default theme"></div>
+                            <div class="color-theme" style="background-color: #e0f7fa;" data-theme="cool" 
+                                 role="button" tabindex="0" aria-label="Cool theme"></div>
+                            <div class="color-theme" style="background-color: #fff8e1;" data-theme="warm" 
+                                 role="button" tabindex="0" aria-label="Warm theme"></div>
+                            <div class="color-theme" style="background-color: #f1f8e9;" data-theme="nature" 
+                                 role="button" tabindex="0" aria-label="Nature theme"></div>
+                            <div class="color-theme" style="background-color: #fce4ec;" data-theme="rose" 
+                                 role="button" tabindex="0" aria-label="Rose theme"></div>
+                        </div>
+                        <div class="font-preview">
+                            <p>Font Preview: The quick brown fox jumps over the lazy dog.</p>
+                        </div>
+                    </div>
+
+                    <div class="panel card">
+                        <div class="panel-header">
+                            <h2>Import Text</h2>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="fileInput">Upload Document (PDF, DOC):</label>
+                            <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt">
+                        </div>
+                        
+                        <button id="uploadBtn" aria-label="Extract text from document">Extract Text</button>
+                    </div>
+
+                    <div class="panel card">
+                        <div class="panel-header">
+                            <h2>Saved Texts</h2>
+                            <button id="saveCurrentBtn" class="success" aria-label="Save current text">Save Current</button>
+                        </div>
+                        
+                        <div id="savedTextsList">
+                            <div class="saved-item" tabindex="0" role="button">
+                                <strong>Reading Assignment 1</strong>
+                                <p>Last modified: Mar 10, 2025</p>
+                            </div>
+                            <div class="saved-item" tabindex="0" role="button">
+                                <strong>Science Notes</strong>
+                                <p>Last modified: Mar 5, 2025</p>
+                            </div>
+                            <div class="saved-item" tabindex="0" role="button">
+                                <strong>History Essay</strong>
+                                <p>Last modified: Feb 28, 2025</p>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                
+                <article class="text-panel card full-width-on-mobile">
+                    <div class="panel-header">
+                        <h2>Text Input</h2>
+                        <div>
+                            <button id="visualTrackingBtn" aria-label="Toggle visual tracking">Visual Tracking</button>
+                        </div>
+                    </div>
+                    
+                    <div id="textContainer" style="position: relative;">
+                        <textarea id="textInput" placeholder="Type or paste text here..." aria-label="Text to be read aloud"></textarea>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="playBtn" aria-label="Play text">Play</button>
+                        <button id="pauseBtn" aria-label="Pause reading">Pause</button>
+                        <button id="stopBtn" aria-label="Stop reading">Stop</button>
+                        <button id="clearBtn" class="accent" aria-label="Clear text">Clear</button>
+                    </div>
+                    
+                    <div class="status-indicator" aria-live="polite">
+                        <p id="statusText">Ready to read</p>
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress" id="readingProgress"></div>
+                        </div>
+                    </div>
+
+                    <div class="dictionary-panel">
+                        <div class="panel-header">
+                            <h2>Dictionary & Word Help</h2>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="word-input">Look up a word:</label>
+                            <div style="display: flex;">
+                                <input type="text" id="word-input" name="word-input" autocomplete="off" 
+                                       style="flex: 1; margin-right: 5px;" placeholder="Enter a word...">
+                                <button id="lookupBtn" aria-label="Search for word">Search</button>
+                            </div>
+                        </div>
+                        
+                        <div id="dictionary-result" aria-live="polite">
+                            <p>Select a word to see its definition, synonyms, antonyms, and pronunciation.</p>
+                            <p><strong>Definition:</strong> <span id="definition"></span></p>
+                            <p><strong>Part of Speech:</strong> <span id="partOfSpeech"></span></p>
+                            <p><strong>Synonyms:</strong> <span id="synonyms"></span></p>
+                            <p><strong>Antonyms:</strong> <span id="antonyms"></span></p>
+                            <p><strong>Pronunciation:</strong> <span id="pronunciation"></span>
+                                <button id="speakBtn" aria-label="Pronounce word">🔊</button>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Tools Tab Content -->
+        <section class="main-tab-content" id="toolsContent">
+            <div class="features-grid">
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">📚</div>
+                    <h3>Dictionary</h3>
+                    <p>Look up word definitions, pronunciations, and synonyms.</p>
+                    <button class="accent" aria-label="Open dictionary tool">Open Dictionary</button>
+                </div>
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">📝</div>
+                    <h3>Note-Taking</h3>
+                    <p>Create and organize notes with text-to-speech support.</p>
+                    <button class="accent" aria-label="Open note-taking tool">Open Notes</button>
+                </div>
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">🖌️</div>
+                    <h3>Highlighting</h3>
+                    <p>Mark important text for review and study.</p>
+                    <button class="accent" aria-label="Use highlighter tool">Use Highlighter</button>
+                </div>
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">💬</div>
+                    <h3>Word Prediction</h3>
+                    <p>Get suggestions for completing words as you type.</p>
+                    <button class="accent" aria-label="Enable word prediction">Enable Prediction</button>
+                </div>
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">🔍</div>
+                    <h3>Grammar Assistance</h3>
+                    <p>Get help with grammar, spelling, and punctuation.</p>
+                    <button class="accent" aria-label="Check grammar">Check Grammar</button>
+                </div>
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">🌐</div>
+                    <h3>Translation Features</h3>
+                    <p>Translate text between multiple languages.</p>
+                    <button class="accent" aria-label="Translate text">Translate Text</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Tab Content -->
+        <section class="main-tab-content" id="resourcesContent">
+            <div class="panel card">
+                <h2>Learning Resources</h2>
+                <div class="accordion">
+                    <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="dyslexia-content">
+                        <span>Dyslexia Information</span>
+                        <span aria-hidden="true">+</span>
+                    </div>
+                    <div class="accordion-content" id="dyslexia-content">
+                        <p>Learn about dyslexia, its characteristics, and how it affects learning.</p>
+                        <ul>
+                            <li>What is Dyslexia?</li>
+                            <li>Common Challenges</li>
+                            <li>Strengths Associated with Dyslexia</li>
+                            <li>Latest Research</li>
+                        </ul>
+                        <button class="accent" aria-label="View dyslexia resources">View Resources</button>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="reading-content">
+                        <span>Reading Strategies</span>
+                        <span aria-hidden="true">+</span>
+                    </div>
+                    <div class="accordion-content" id="reading-content">
+                        <p>Effective techniques to improve reading comprehension and fluency.</p>
+                        <ul>
+                            <li>Multi-Sensory Reading Approaches</li>
+                            <li>Chunking Text</li>
+                            <li>Active Reading Techniques</li>
+                            <li>Comprehension Boosters</li>
+                        </ul>
+                        <button class="accent" aria-label="View reading strategies">View Strategies</button>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="study-content">
+                        <span>Study Techniques</span>
+                        <span aria-hidden="true">+</span>
+                    </div>
+                    <div class="accordion-content" id="study-content">
+                        <p>Methods to enhance learning and retention of information.</p>
+                        <ul>
+                            <li>Mind Mapping</li>
+                            <li>Spaced Repetition</li>
+                            <li>Mnemonic Devices</li>
+                            <li>Organizational Tools</li>
+                        </ul>
+                        <button class="accent" aria-label="View study techniques">View Techniques</button>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="progress-content">
+                        <span>Progress Tracking</span>
+                        <span aria-hidden="true">+</span>
+                    </div>
+                    <div class="accordion-content" id="progress-content">
+                        <p>Track your reading improvement and academic progress.</p>
+                        <div class="progress-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress" style="width: 65%;"></div>
+                        </div>
+                        <p>Reading Speed: 65% improvement</p>
+                        <button class="accent" aria-label="View progress reports">View Full Reports</button>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="exercises-content">
+                        <span>Practice Exercises</span>
+                        <span aria-hidden="true">+</span>
+                    </div>
+                    <div class="accordion-content" id="exercises-content">
+                        <p>Activities designed to strengthen reading and writing skills.</p>
+                        <ul>
+                            <li>Word Recognition</li>
+                            <li>Phonemic Awareness</li>
+                            <li>Fluency Drills</li>
+                            <li>Comprehension Quizzes</li>
+                        </ul>
+                        <button class="accent" aria-label="Start practice exercises">Start Practicing</button>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="content-recommendations">
+                        <span>Recommended Content</span>
+                        <span aria-hidden="true">+</span>
+                    </div>
+                    <div class="accordion-content" id="content-recommendations">
+                        <p>Dyslexia-friendly books, articles, and digital resources.</p>
+                        <ul>
+                            <li>Dyslexia-Friendly Books</li>
+                            <li>Audiobook Recommendations</li>
+                            <li>Educational Videos</li>
+                            <li>Useful Websites</li>
+                        </ul>
+                        <button class="accent" aria-label="Browse recommended content">Browse Content</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Tab Content -->
+        <section class="main-tab-content" id="supportContent">
+            <div class="features-grid">
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">🎬</div>
+                    <h3>Tutorial Videos</h3>
+                    <p>Watch step-by-step guides on how to use VoiceReady effectively.</p>
+                    <button class="accent" aria-label="Watch tutorial videos">Watch Tutorials</button>
+                </div>
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">📋</div>
+                    <h3>User Guide</h3>
+                    <p>Detailed documentation for all features and functions.</p>
+                    <button class="accent" aria-label="View user guide">View Guide</button>
+                </div>
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">❓</div>
+                    <h3>FAQs</h3>
+                    <p>Find answers to commonly asked questions about the app.</p>
+                    <button class="accent" aria-label="Read frequently asked questions">Read FAQs</button>
+                </div>
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">🔧</div>
+                    <h3>Troubleshooting</h3>
+                    <p>Solutions for common issues and technical problems.</p>
+                    <button class="accent" aria-label="View troubleshooting guide">Fix Problems</button>
+                </div>
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">📞</div>
+                    <h3>Contact Help Desk</h3>
+                    <p>Get in touch with our support team for personalized assistance.</p>
+                    <button class="accent" aria-label="Contact support team">Contact Support</button>
+                </div>
+                <div class="feature-card card">
+                    <div class="feature-icon" aria-hidden="true">👥</div>
+                    <h3>Community Forum</h3>
+                    <p>Connect with other users to share tips and experiences.</p>
+                    <button class="accent" aria-label="Join community forum">Join Community</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Account Tab Content -->
+        <section class="main-tab-content" id="accountContent">
+            <div class="panel card">
+                <div class="panel-header">
+                    <h2>Account Management</h2>
+                </div>
+                
+                <div id="loginSection">
+                    <h3>Sign In</h3>
+                    <form id="loginForm" onsubmit="return validateLogin(event)">
+                        <div class="form-group">
+                            <label for="username">Username or Email:</label>
+                            <input type="email" id="username" name="username" required 
+                                   autocomplete="username" placeholder="Enter your username or email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required 
+                                   autocomplete="current-password" minlength="8" 
+                                   placeholder="Enter your password">
+                        </div>
+                        <input type="hidden" name="csrf_token" id="csrf_token" value="">
+                        <div class="button-group">
+                            <button type="submit" id="loginBtn" aria-label="Sign in to account">Sign In</button>
+                            <button type="button" id="registerBtn" class="accent" aria-label="Create new account">Create Account</button>
+                        </div>
+                    </form>
+                    <p><a href="#" id="forgotPassword">Forgot Password?</a></p>
+                </div>
+                
+                <div id="profileSection" style="display: none;">
+                    <h3>User Profile</h3>
+                    <div class="control-group">
+                        <label>Name: <span id="profileName">John Doe</span></label>
+                    </div>
+                    <div class="control-group">
+                        <label>Email: <span id="profileEmail">johndoe@example.com</span></label>
+                    </div>
+                    <div class="control-group">
+                        <label>Member Since: <span id="profileJoinDate">January 15, 2025</span></label>
+                    </div>
+                    <div class="button-group">
+                        <button id="editProfileBtn" aria-label="Edit profile information">Edit Profile</button>
+                        <button id="logoutBtn" class="accent" aria-label="Log out of account">Log Out</button>
+                    </div>
+                    
+                    <h3>Preferences</h3>
+                    <div class="control-group">
+                        <label for="defaultVoice" id="defaultVoiceLabel">Default Voice:</label>
+                        <select id="defaultVoice" aria-labelledby="defaultVoiceLabel"></select>
+                    </div>
+                    <div class="control-group">
+                        <label for="defaultFont" id="defaultFontLabel">Default Font:</label>
+                        <select id="defaultFont" aria-labelledby="defaultFontLabel">
+                            <option value="'OpenDyslexic', Arial, sans-serif">OpenDyslexic</option>
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                            <option value="'Verdana', sans-serif">Verdana</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="defaultTheme" id="defaultThemeLabel">Default Theme:</label>
+                        <select id="defaultTheme" aria-labelledby="defaultThemeLabel">
+                            <option value="default">Default</option>
+                            <option value="cool">Cool Blue</option>
+                            <option value="warm">Warm Yellow</option>
+                            <option value="nature">Nature Green</option>
+                            <option value="rose">Rose Pink</option>
+                        </select>
+                    </div>
+                    <button id="savePreferencesBtn" aria-label="Save preference settings">Save Preferences</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 VoiceReady. All rights reserved.</p>
+            <a class="foot" href="#">Privacy Policy</a>
+            <a class="foot" href="#">Terms of Service</a>
+            <a class="foot" href="#">Accessibility Statement</a>
+    </footer>
+</body>
+</html>
+
