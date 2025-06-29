@@ -6,36 +6,30 @@ A web-based Text-to-Speech (TTS) application designed to assist students with dy
 
 ### Features
 
-- Text-to-Speech functionality using the Web Speech API  
-- Adjustable voice, pitch, and reading speed  
-- Visual tracking for improved reading focus  
-- Document upload and text extraction  
-- Dictionary integration with word pronunciation  
-- Note-taking tool with save and read-aloud support  
-- Customizable themes and dyslexia-friendly fonts  
-- Basic CSRF protection and preference saving  
+- Text-to-Speech functionality using the Web Speech API
+- Adjustable voice, pitch, and reading speed
+- Visual tracking for improved reading focus
+- Document upload and text extraction
+- Dictionary integration with word pronunciation
+- Note-taking tool with save and read-aloud support
+- Customizable themes and dyslexia-friendly fonts
+- Basic CSRF protection and preference saving
 
 ---
 
-### Installation 
+### Installation
 
 -Clone the repository and open `index.html` in a web browser:
-  git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/your-username/your-repo-name.git
 cd your-repo-name
 
 -Alternatively, use Live Server in VS Code:
-  npx live-server
+npx live-server
 
 ---
 
-###Tech Stack
-  -HTML
-  -CSS
-  -JavaScript
-  -Web Speech API
-  -LocalStorage / SessionStorage
-
-###Team Members
-  -Meenakshi Suresh
-  -Reshmi J
-  -Arya S
+### Team Members
+  
+  - Meenakshi Suresh
+  - Reshmi J
+  - Arya S
